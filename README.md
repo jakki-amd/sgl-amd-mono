@@ -113,6 +113,11 @@ SGLANG_USE_AITER=1 SGLANG_AITER_K3_OPT=1 python -m sglang.launch_server \
   --enable-amd-monokernel
 ```
 
+When SGLang serves Kimi-K3's MoE front in static FP8, add
+`SGLANG_AMD_MONO_K3_BF16_FRONT=1`: the launch then reads bf16 copies of the
+router gate, latent down and shared gate | up weights, kept from the checkpoint
+at load (about 7.4 GiB a rank). Without it the monokernel refuses that front.
+
 Kimi-K3.1, with DFLASH (the launches read and write the ReplaySSM ring):
 
 ```bash
